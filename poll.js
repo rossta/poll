@@ -72,12 +72,6 @@ $(function(){
     }
   }
   
-  displayResults = function() {
-    $.get("polls-2008-09-29.csv", function(data){
-        US.polls = statePollSet(data);
-    });
-  }
-  
   stringToValue = function(text) {
     return text.replace(/[\.\ ]/g, '_').toLowerCase();
   } 
@@ -132,29 +126,30 @@ $(function(){
       };
       lines++;
     }
-    console.log('finish polls object');
-    
     return polls;
   }
   
   
   displayFor = function(value) {
+    console.log("getting display for " + value + " data");
+    
     if(value == "national") {
       nationalDisplay();
     } else {
       stateDisplayFor(value);
     }
-    console.log('finish get poll for');
   }
   
   nationalDisplay = function() {
     $('#state_display').hide();
     $("#demEv").text(US.polls.demEv);
     $("#repEv").text(US.polls.repEv);
+    $('#national_display').show();
   }
   
   stateDisplayFor = function(stateVal) {
     var poll = US.polls[stateVal]
+    $('#national_display').hide();
     $("#state").text(poll.state);
     $("#ev").text(poll.ev);
     $("#dem").displayBar(poll.dem);
@@ -172,9 +167,19 @@ $(function(){
     gDoneButton = new AppleGlassButton($("#doneButton")[0], "Done", hidePrefs); 
     gInfoButton = new AppleInfoButton($("#infoButton")[0], front, "white", "white", showPrefs);
     
-    displayResults();
-    setSelectOptions(stateSelect[0]);
-    // displayFor(stateSelect[0].value);
+    $.ajax({
+      type: "GET",
+      url: "polls-2008-09-29.csv", 
+      dateType: "csv",
+      error: function() {
+        console.log("Error loading data");
+      },
+      success: function(data){
+        US.polls = statePollSet(data);
+        setSelectOptions(stateSelect[0]);
+        displayFor(stateSelect[0].value);
+      }
+    });
   } 
   
 
