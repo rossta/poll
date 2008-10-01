@@ -1,6 +1,0 @@
-curl http://www.electoral-vote.com/evp2008/Pres/pres_polls.csv | cut -d, -f 3,5,6,7,8 > polls.csv ;
-cat polls.csv | sort -t, -k1,1 -u -k1,1 -o latest_polls.csv
-
-curl http://www.electoral-vote.com/evp2008/Pres/Excel/today.csv | cut -d, -f 1,2,3,4,5,6 | grep -e "\(S[tu][am][ts]\)" -v | tee polls.csv
-
-curl http://www.electoral-vote.com/evp2008/Pres/Excel/today.csv | cut -d, -f 1,2,3,4,5,6 | grep -e "\(S[tu][am][ts]\)" -v | tee "polls-$(date +%F).csv"
