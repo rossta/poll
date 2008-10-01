@@ -1,6 +1,3 @@
-
-*/
-
 body {
 	margin: 0;
 	font: 12px "Lucida Grande";
@@ -16,16 +13,26 @@ a:hover {
 	text-decoration: underline;
 }
 
-
 #front, #back {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 352px;
-	height: 200px;
+	width: 425px;
 	background-color: #cccccc;
   display:block; 
 }
+
+select#states {
+  float: right;
+}
+
+#poll {
+  margin: 10px;
+  padding: 10px;
+  height: 200px;
+}
+#poll.favorsDem {background: #e0e7ff;}
+#poll.favorsRep {background: #ffe0ff;}
 #back { 
   background-color: black;
   display:none;
@@ -44,18 +51,11 @@ a:hover {
   display:block;
 } 
 
-#dem {
-  background-color: blue;
+#state_display .bar {
   opacity: 0.8;
   display:block;
 }
-#rep {
-  display:block;
-  background-color: red;
-  opacity: 0.8;
-}
-#ind {
-  display:block;
-  background-color: white;
-  opacity: 0.8;
-}
+
+#dem .bar {background-color: blue;}
+#rep .bar {background-color: red;}
+#ind .bar {background-color: white;}

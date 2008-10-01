@@ -25,29 +25,30 @@ license or right is granted, either expressly or by implication, by Apple.
 </head>
 <body>
   <div id="front">
-	  <div id="display">
+	  <div id="poll">
+	    <select name='states' id='states'></select>
 	    <div id="state_display">
   	    <div id="state"></div>
-  	    <div>Electoral votes: <span id="ev"></span></div>
-  	    <div>% Voting Democrat: <span id="dem"></span></div>
-  	    <div>% Voting Republican: <span id="rep"></span></div>
-  	    <div>% Voting Independent: <span id="ind"></span></div>
-  	    <div>Poll Date: <span id="date"></span></div>
-  	    <div>Favors: <span id="favors"></span></div>
+  	    <div id="ev">Electoral votes: <span></span></div>
+  	    <div id="dem">% Voting Democrat: <span class="bar"></span></div>
+  	    <div id="rep">% Voting Republican: <span class="bar"></span></div>
+  	    <div id="ind">% Voting Independent: <span class="bar"></span></div>
+  	    <div id="date">Last poll: <span></span></div>
+  	    <div id="favors">Favors: <span></span></div>
 	    </div>
 	    <div id="national_display">
-  	    <div>Total EV for Dems: <span id="demEv"></span></div>
-  	    <div>Total EV for Reps: <span id="repEv"></span></div>
+  	    <div id="demEv">Total EV for Dems: <span></span></div>
+  	    <div id="repEv">Total EV for Reps: <span></span></div>
 	    </div>
-	    
 	  </div>
-	  <select name='states' id='states'></select>
 	  <div id="infoButton"></div>
   </div>
   
   <div id="back">
-    <p>by Ross Kaffenberger</p>
-	  <div id="doneButton"></div>
+    <div class="display">
+      <p>by Ross Kaffenberger</p>
+  	  <div id="doneButton"></div>
+    </div>
   </div>
   
 </body>

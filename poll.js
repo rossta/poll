@@ -17,12 +17,13 @@ $(function(){
 
   $.fn.displayBar = function(value){
     var result = $(this).each(function(){
-      if(value) {
-        $(this).text(value);
-        $(this).css("width", value + "%");
+      bar = $(this).children(".bar")
+      if(value > 0) {
+        bar.text(value);
+        bar.css("width", value + "%");
       } else {
-        $(this).text("0")
-        $(this).css("width", "0");
+        bar.text("0")
+        bar.css("width", "0");
       }
     });
     return result;
@@ -129,6 +130,22 @@ $(function(){
     return polls;
   }
   
+  $.fn.highlightFavorite = function(favors) {
+    var result = $(this).each(function() {
+      switch(favors) {
+        case "Dem":
+          $(this).addClass("favorsDem");
+          $(this).removeClass("favorsRep");
+          break;
+        case "Rep":
+          $(this).addClass("favorsRep");
+          $(this).removeClass("favorsDem");
+          break;
+      }
+      return true;
+    });
+    return result;
+  }
   
   displayFor = function(value) {
     console.log("getting display for " + value + " data");
@@ -142,8 +159,6 @@ $(function(){
   
   nationalDisplay = function() {
     $('#state_display').hide();
-    $("#demEv").text(US.polls.demEv);
-    $("#repEv").text(US.polls.repEv);
     $('#national_display').show();
   }
   
@@ -151,14 +166,14 @@ $(function(){
     var poll = US.polls[stateVal]
     $('#national_display').hide();
     $("#state").text(poll.state);
-    $("#ev").text(poll.ev);
+    $("#ev span").text(poll.ev);
     $("#dem").displayBar(poll.dem);
     $("#rep").displayBar(poll.rep);
     $("#ind").displayBar(poll.ind);
-    $("#date").text(poll.date);
-    $("#favors").text(poll.favors);
-    $("#demEv").text(US.polls.demEv);
-    $("#repEv").text(US.polls.repEv);
+    $("#date span").text(poll.date);
+    $("#poll").highlightFavorite(poll.favors);
+    $("#demEv span").text(US.polls.demEv);
+    $("#repEv span").text(US.polls.repEv);
     $('#state_display').show();
     return poll;
   }
@@ -177,6 +192,8 @@ $(function(){
       success: function(data){
         US.polls = statePollSet(data);
         setSelectOptions(stateSelect[0]);
+        $("#demEv span").text(US.polls.demEv);
+        $("#repEv span").text(US.polls.repEv);
         displayFor(stateSelect[0].value);
       }
     });
