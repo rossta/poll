@@ -1,0 +1,61 @@
+
+*/
+
+body {
+	margin: 0;
+	font: 12px "Lucida Grande";
+}
+
+a:link {
+	font-weight: bold;
+	color: #666666;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+#front, #back {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 352px;
+	height: 200px;
+	background-color: #cccccc;
+  display:block; 
+}
+#back { 
+  background-color: black;
+  display:none;
+} 
+
+#infoButton { 
+  position:absolute; 
+  bottom:24px; 
+  right:40px;
+  display: block;
+} 
+#doneButton { 
+  position:absolute; 
+  bottom:20px; 
+  left:82px;
+  display:block;
+} 
+
+#dem {
+  background-color: blue;
+  opacity: 0.8;
+  display:block;
+}
+#rep {
+  display:block;
+  background-color: red;
+  opacity: 0.8;
+}
+#ind {
+  display:block;
+  background-color: white;
+  opacity: 0.8;
+}

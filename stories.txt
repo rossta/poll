@@ -1,0 +1,14 @@
+Stories
+As a voter, I want to know where my presidential candidate stands in the polls for each state.
+
+  Tasks
+  Images for widget front/back
+  HTML/CSS for widget front/back
+  Javascript for widget internals
+  Capture today's poll data
+  Select box for states
+  Javascript for state data
+  HTML/CSS for state data
+
+As a voter, I want to see a projected total of electoral votes for each candidate. 
+
