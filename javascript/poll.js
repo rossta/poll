@@ -59,17 +59,14 @@ $(function(){
   }
   
   getTodaysPolls = function() {
-    var urlCSV = "http://www.electoral-vote.com/evp2008/Pres/Excel/today.csv"
-    var curlCSV = "curl " + urlCSV
-    var extractColumns = "cut -d, -f 1,2,3,4,5,6"
-    var trimRows = "grep -e '\(S[tu][am][ts]\)' -v"
-    var saveFile = 'tee "polls-$(date +%F).csv"'
-    var pipe = " | "
-    var command = curlCSV + pipe + extractColumns + pipe + trimRows + pipe + saveFile
-    
+    var data;
     if(window.widget) { 
-      pollData = widget.system(command , displayResults).outputString; 
+      pollData = widget.system("/bin/sh curl_polls.sh", null).outputString;
+      if(pollData) {
+        data = widget.system("/bin/sh format_input.sh " + pollData, null).outputString;
+      }
     }
+    return data;
   }
   
   stringToValue = function(text) {
@@ -129,23 +126,37 @@ $(function(){
     gDoneButton = new AppleGlassButton($("#doneButton")[0], "Done", hidePrefs); 
     gInfoButton = new AppleInfoButton($("#infoButton")[0], front, "white", "white", showPrefs);
     
-    $.ajax({
-      type: "GET",
-      url: "latest_polls.csv", 
-      dateType: "csv",
-      error: function() {
-        console.log("Error loading data");
-      },
-      success: function(data){
-        US.polls = statePollSet(data);
-        setSelectOptions(stateSelect[0]);
-        $("#demEv span").text(US.polls.demEv);
-        $("#repEv span").text(US.polls.repEv);
-        displayFor(stateSelect[0].value);
-      }
-    });
-  } 
+    var data = getTodaysPolls();
+    var source = "";
+    if(data) {
+      source = "www.electoral-votes.com : current";
+      console.log("from system");
+      completeSetup(data, source);
+    } else {
+      $.ajax({
+        type: "GET",
+        url: "latest_polls.csv", 
+        dateType: "csv",
+        error: function() {
+          console.log("Error loading data");
+        },
+        success: function(data){
+          console.log("from archive");
+          source = "www.electoral-votes.com : archive";
+          completeSetup(data, source);
+        }
+      });
+    }
+  }
   
+  completeSetup = function(data, source) {
+    US.polls = statePollSet(data);
+    setSelectOptions(stateSelect[0]);
+    $("#source").text(source);
+    $("#demEv span").text(US.polls.demEv);
+    $("#repEv span").text(US.polls.repEv);
+    displayFor(stateSelect[0].value);
+  }  
 
   setup();
   stateSelect.change(function(){

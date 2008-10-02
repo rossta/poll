@@ -34,6 +34,10 @@ select#states {
   padding: 10px;
   height: 240px;
 }
+.display {
+  height: 150px;
+  padding: 10px;
+}
 #poll.favorsDem #state_display {background: #e0e7ff;}
 #poll.favorsRep #state_display {background: #ffe0ff;}
 #back { 
