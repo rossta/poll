@@ -21,12 +21,13 @@ license or right is granted, either expressly or by implication, by Apple.
   <script type='text/javascript' src='/System/Library/WidgetResources/AppleClasses/AppleInfoButton.js' charset='utf-8'></script>
   <script type='text/javascript' src='/System/Library/WidgetResources/AppleClasses/AppleAnimator.js' charset='utf-8'></script>
   <script type='text/javascript' src='javascript/jquery.min.js' charset='utf-8'></script>
-  <script type='text/javascript' src='javascript/csv_poll_parser.js' charset='utf-8'></script>
+  <script type='text/javascript' src='javascript/csv_poll_to_json.js' charset='utf-8'></script>
   <script type='text/javascript' src='javascript/poll.js' charset='utf-8'></script>
 </head>
 <body>
   <div id="front">
 	  <div id="poll">
+      <p id="debug" style="color:red"></p>
 	    <select name='states' id='states'></select>
 	    <div id="state_display" class="display">
   	    <div id="state"></div>

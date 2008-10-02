@@ -58,16 +58,6 @@ $(function(){
     setTimeout ('widget.performTransition();', 0); 
   }
   
-  getTodaysPolls = function() {
-    var data;
-    if(window.widget) { 
-      pollData = widget.system("/bin/sh curl_polls.sh", null).outputString;
-      if(pollData) {
-        data = widget.system("/bin/sh format_input.sh " + pollData, null).outputString;
-      }
-    }
-    return data;
-  }
   
   stringToValue = function(text) {
     return text.replace(/[\.\ ]/g, '_').toLowerCase();
@@ -122,6 +112,32 @@ $(function(){
     return poll;
   }
   
+  function unixParse(data) {
+    widget.system(pollData + " > temp.csv", null);
+    $('#debug').text("column..."+ pollData);
+    data = widget.system("/usr/bin/cut -d, -f 1,2,3,4,5,6  temp.csv", null).outputString;
+    $('#debug').text("grep..."+ data);
+    data = widget.system('/usr/bin/grep -e "\(S[tu][am][ts]\)" -v ' + data, null).outputString;
+    // $('#debug').text("archive..."+ data);
+    data = widget.system('/usr/bin/tee "archive/polls-$(date +%F).csv" ' + data, null).outputString;
+    // $('#debug').text("latest..."+ data);
+    data = widget.system('/usr/bin/tee latest_polls.csv ' + data, null).outputString;
+    // $('#debug').text("done: " + data);
+  }
+  
+  getTodaysPolls = function() {
+    var data;
+    if(window.widget) {
+      pollData = widget.system("/usr/bin/curl http://www.electoral-vote.com/evp2008/Pres/Excel/today.csv", null).outputString;
+      if(pollData) {
+        data = formatCSV(data);
+      }
+      $('#debug').text(data);
+    }
+    
+    return data;
+    
+  }
   setup = function() {
     gDoneButton = new AppleGlassButton($("#doneButton")[0], "Done", hidePrefs); 
     gInfoButton = new AppleInfoButton($("#infoButton")[0], front, "white", "white", showPrefs);
